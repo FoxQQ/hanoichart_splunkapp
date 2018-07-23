@@ -1,3 +1,5 @@
+//no comment
+
 class BasicChart{
     constructor(data){
         this.data = data;
@@ -24,7 +26,7 @@ class BasicChart{
 
 class HanoiChart extends BasicChart{
     constructor(data){
-		alert("v4");
+		alert("v0");
         super(data);
         var maxVal = d3.max(this.getCol(data, 1));
         var centerline = this.width/3-this.margin/2;
