@@ -1,7 +1,24 @@
 [app/ui]
 version = 7.1.0
-modtime = 1532085097.730667700
+modtime = 1532349564.876210200
 
 [app/launcher]
 version = 7.1.0
-modtime = 1532085097.750220800
+modtime = 1532349564.900744200
+
+[html/hanoicharthtml]
+access = read : [ * ], write : [ admin, power ]
+export = system
+owner = admin
+version = 7.1.0
+modtime = 1532349577.399328800
+
+[]
+access = read : [ * ], write : [ admin, power ]
+export = system
+version = 7.1.0
+modtime = 1532349549.542754700
+
+[app/package/check_for_updates]
+version = 7.1.0
+modtime = 1532349564.926104100

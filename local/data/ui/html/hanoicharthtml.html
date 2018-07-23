@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>HanoiChartHTML</title>
+    <link rel="shortcut icon" href="/en-US/static/@82E6407637565B694B8A353780D9B625587A6466B679881A3A123E8B52C8B57B/img/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="{{SPLUNKWEB_URL_PREFIX}}/static/build/css/bootstrap-enterprise.css" />
+    <link rel="stylesheet" type="text/css" href="{{SPLUNKWEB_URL_PREFIX}}/static/build/css/splunkjs-dashboard.css" />
+  <link rel="stylesheet" type="text/css" href="{{SPLUNKWEB_URL_PREFIX}}/static/app/hanoichart/style.css" />
+
+        <meta name="referrer" content="never" />
+        <meta name="referrer" content="no-referrer" />
+    
+        <script>
+            (function () {
+                window._splunk_metrics_events = [];
+                window._splunk_metrics_events.active = true;
+
+                function onLoadSwa() {
+                    new SWA({"instanceGUID": "5DB0FB92-967F-4E3F-B97B-CE2E46B7111A", "visibility": "anonymous,support", "url": "https://e1345286.api.splkmobile.com/1.0/e1345286", "userID": "a1863e646a21729f375e8ea13b9aea0eb58b49f6a7decf1699064cb6028eaeb7", "version": "3", "deploymentID": "f2775e65-5200-537e-b724-66707eff30c4"});
+                };
+
+                document.addEventListener("DOMContentLoaded", function(event) {
+                    var s = document.createElement('script');
+                    s.type = 'text/javascript';
+                    s.async = true;
+                    s.src = '/en-US/static/app/splunk_instrumentation/build/pages/swa.js';
+                    s.addEventListener('load', onLoadSwa);
+                    var x = document.getElementsByTagName('script')[0];
+                    x.parentNode.insertBefore(s, x);
+                });
+            }());
+        </script>
+    </head>
+<body class="simplexml preload locale-en" data-splunk-version="7.1.0" data-splunk-product="splunk">
+<!--
+BEGIN LAYOUT
+This section contains the layout for the dashboard. Splunk uses proprietary
+styles in <div> tags, similar to Bootstrap's grid system.
+-->
+<header>
+    <a aria-label="Screen reader users, click here to skip the navigation bar" class="navSkip" href="#navSkip" tabIndex="1">Skip Navigation &gt;</a>
+    <div class="header splunk-header">
+            <div id="placeholder-splunk-bar">
+                <a href="{{SPLUNKWEB_URL_PREFIX}}/app/launcher/home" class="brand" title="splunk &gt; listen to your data">splunk<strong>&gt;</strong></a>
+            </div>
+                <div id="placeholder-app-bar"></div>
+    </div>
+    <a id="navSkip"></a>
+</header>
+<div class="dashboard-body container-fluid main-section-body" data-role="main">
+    <div class="dashboard-header clearfix">
+        <h2>HanoiChartHTML</h2>
+    </div>
+  <p>Chart Container:</p>
+  	<div id="chart-container"></div>
+
+  <p>End Chart Container</p>
+</div>
+
+<!--
+END LAYOUT
+-->
+
+<script src="{{SPLUNKWEB_URL_PREFIX}}/config?autoload=1" crossorigin="use-credentials"></script>
+<script src="{{SPLUNKWEB_URL_PREFIX}}/static/js/i18n.js"></script>
+<script src="{{SPLUNKWEB_URL_PREFIX}}/i18ncatalog?autoload=1"></script>
+<script src="{{SPLUNKWEB_URL_PREFIX}}/static/build/simplexml/index.js"></script>
+<script type="text/javascript">
+// <![CDATA[
+// <![CDATA[
+//
+// LIBRARY REQUIREMENTS
+//
+
+require.config({
+ baseUrl: "{{SPLUNKWEB_URL_PREFIX}}/static/js",
+	waitSeconds: 0,
+	paths: {
+        
+        'd3': 'https://d3js.org/d3.v3.min',
+        'hanoi': '{{SPLUNKWEB_URL_PREFIX}}/static/app/hanoichart/hanoi'
+    },
+    shim: {
+        'hanoi': {
+            deps: ['d3']
+        }
+    }
+});
+// In the require function, we include the necessary libraries and modules for
+// the HTML dashboard. Then, we pass variable names for these libraries and
+// modules as function parameters, in order.
+//
+// When you add libraries or modules, remember to retain this mapping order
+// between the library or module and its function parameter. You can do this by
+// adding to the end of these lists, as shown in the commented examples below.
+
+require([
+    "splunkjs/mvc",
+    "splunkjs/mvc/utils",
+    "splunkjs/mvc/tokenutils",
+    "underscore",
+    "jquery",
+    "splunkjs/mvc/simplexml",
+    "splunkjs/mvc/layoutview",
+    "splunkjs/mvc/simplexml/dashboardview",
+    "splunkjs/mvc/simplexml/dashboard/panelref",
+    "splunkjs/mvc/simplexml/element/chart",
+    "splunkjs/mvc/simplexml/element/event",
+    "splunkjs/mvc/simplexml/element/html",
+    "splunkjs/mvc/simplexml/element/list",
+    "splunkjs/mvc/simplexml/element/map",
+    "splunkjs/mvc/simplexml/element/single",
+    "splunkjs/mvc/simplexml/element/table",
+    "splunkjs/mvc/simplexml/element/visualization",
+    "splunkjs/mvc/simpleform/formutils",
+    "splunkjs/mvc/simplexml/eventhandler",
+    "splunkjs/mvc/simplexml/searcheventhandler",
+    "splunkjs/mvc/simpleform/input/dropdown",
+    "splunkjs/mvc/simpleform/input/radiogroup",
+    "splunkjs/mvc/simpleform/input/linklist",
+    "splunkjs/mvc/simpleform/input/multiselect",
+    "splunkjs/mvc/simpleform/input/checkboxgroup",
+    "splunkjs/mvc/simpleform/input/text",
+    "splunkjs/mvc/simpleform/input/timerange",
+    "splunkjs/mvc/simpleform/input/submit",
+    "splunkjs/mvc/searchmanager",
+    "splunkjs/mvc/savedsearchmanager",
+    "splunkjs/mvc/postprocessmanager",
+    "splunkjs/mvc/simplexml/urltokenmodel",
+	"hanoi"
+    // Add comma-separated libraries and modules manually here, for example:
+    // ..."splunkjs/mvc/simplexml/urltokenmodel",
+    // "splunkjs/mvc/tokenforwarder"
+    ],
+    function(
+        mvc,
+        utils,
+        TokenUtils,
+        _,
+        $,
+        DashboardController,
+        LayoutView,
+        Dashboard,
+        PanelRef,
+        ChartElement,
+        EventElement,
+        HtmlElement,
+        ListElement,
+        MapElement,
+        SingleElement,
+        TableElement,
+        VisualizationElement,
+        FormUtils,
+        EventHandler,
+        SearchEventHandler,
+        DropdownInput,
+        RadioGroupInput,
+        LinkListInput,
+        MultiSelectInput,
+        CheckboxGroupInput,
+        TextInput,
+        TimeRangeInput,
+        SubmitButton,
+        SearchManager,
+        SavedSearchManager,
+        PostProcessManager,
+        UrlTokenModel
+
+        // Add comma-separated parameter names here, for example:
+        // ...UrlTokenModel,
+        // TokenForwarder
+        ) {
+
+        var pageLoading = true;
+
+
+        //
+        // TOKENS
+        //
+
+        // Create token namespaces
+        var urlTokenModel = new UrlTokenModel();
+        mvc.Components.registerInstance('url', urlTokenModel);
+        var defaultTokenModel = mvc.Components.getInstance('default', {create: true});
+        var submittedTokenModel = mvc.Components.getInstance('submitted', {create: true});
+
+        urlTokenModel.on('url:navigate', function() {
+            defaultTokenModel.set(urlTokenModel.toJSON());
+            if (!_.isEmpty(urlTokenModel.toJSON()) && !_.all(urlTokenModel.toJSON(), _.isUndefined)) {
+                submitTokens();
+            } else {
+                submittedTokenModel.clear();
+            }
+        });
+
+        // Initialize tokens
+        defaultTokenModel.set(urlTokenModel.toJSON());
+
+        function submitTokens() {
+            // Copy the contents of the defaultTokenModel to the submittedTokenModel and urlTokenModel
+            FormUtils.submitForm({ replaceState: pageLoading });
+        }
+
+        function setToken(name, value) {
+            defaultTokenModel.set(name, value);
+            submittedTokenModel.set(name, value);
+        }
+
+        function unsetToken(name) {
+            defaultTokenModel.unset(name);
+            submittedTokenModel.unset(name);
+        }
+
+
+
+        //
+        // SEARCH MANAGERS
+        //
+
+
+		var mysm = new SearchManager({
+			"id":"mysm",
+			"search": '|inputlookup mydata.csv|search *',
+			"earliest_time": "0",
+            "latest_time": "$latest$",
+            "cancelOnUnload": true,
+            "status_buckets": 0,
+            "app": utils.getCurrentApp(),
+            "auto_cancel": 90,
+            "preview": true,
+            "runWhenTimeIsUndefined": false
+		},{tokens: true, tokenNamespace: "submitted"});
+		console.log(mysm);
+
+		var myResults = mysm.data("results");
+		myResults.on("data", function(){
+   			console.log(myResults.data());
+			var data= myResults.data().rows;
+			var container = new HanoiChart(data);
+		});
+
+        //
+        // SPLUNK LAYOUT
+        //
+
+        $('header').remove();
+        new LayoutView({"hideAppBar": false, "hideSplunkBar": false, "hideChrome": false})
+            .render()
+            .getContainerElement()
+            .appendChild($('.dashboard-body')[0]);
+
+        //
+        // DASHBOARD EDITOR
+        //
+
+        new Dashboard({
+            id: 'dashboard',
+            el: $('.dashboard-body'),
+            showTitle: true,
+            editable: true
+        }, {tokens: true}).render();
+
+
+        //
+        // VIEWS: VISUALIZATION ELEMENTS
+        //
+
+        // Initialize time tokens to default
+        if (!defaultTokenModel.has('earliest') && !defaultTokenModel.has('latest')) {
+            defaultTokenModel.set({ earliest: '0', latest: '' });
+        }
+
+        submitTokens();
+
+
+        //
+        // DASHBOARD READY
+        //
+
+        DashboardController.ready();
+        pageLoading = false;
+
+    }
+);
+// ]]>
+</script>
+</body>
+</html>
